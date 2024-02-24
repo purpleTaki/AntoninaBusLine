@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 31, 2024 at 03:46 PM
+-- Generation Time: Feb 24, 2024 at 11:02 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -35,16 +35,21 @@ CREATE TABLE `booked` (
   `qty` int(11) NOT NULL,
   `status` tinyint(1) DEFAULT 0 COMMENT '1=Paid, 0- Unpaid',
   `date_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `cnum` varchar(50) NOT NULL
+  `cnum` varchar(50) NOT NULL,
+  `paid_ref` varchar(50) NOT NULL DEFAULT 'AWAITING PAYMENT'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `booked`
 --
 
-INSERT INTO `booked` (`id`, `schedule_id`, `ref_no`, `name`, `qty`, `status`, `date_updated`, `cnum`) VALUES
-(12, 10, '202401316263', 'test', 1, 1, '2024-01-31 21:43:42', '09504059787'),
-(15, 17, '202401314052', 'Joseph Garcia', 3, 1, '2024-01-31 21:41:59', '09397126139');
+INSERT INTO `booked` (`id`, `schedule_id`, `ref_no`, `name`, `qty`, `status`, `date_updated`, `cnum`, `paid_ref`) VALUES
+(12, 10, '202401316263', 'test', 1, 1, '2024-02-24 13:44:26', '09504059787', '20240224064426'),
+(15, 17, '202401314052', 'Joseph Garcia', 3, 1, '2024-01-31 21:41:59', '09397126139', 'AWAITING PAYMENT'),
+(16, 10, '202402101275', 'test', 1, 1, '2024-02-10 17:50:26', '123123123123', '20240210105026'),
+(17, 10, '202402106867', 'terry', 2, 1, '2024-02-10 18:04:51', '123123123', '20240210110451'),
+(18, 11, '202402107582', 'balbal', 2, 1, '2024-02-10 18:17:03', '123123', '20240210111703'),
+(19, 17, '202402105212', 'kenny', 2, 1, '2024-02-10 18:19:29', '123123', '20240210111929');
 
 -- --------------------------------------------------------
 
@@ -135,36 +140,57 @@ CREATE TABLE `schedule_list` (
   `status` tinyint(4) NOT NULL DEFAULT 1,
   `availability` int(11) NOT NULL,
   `price` text NOT NULL,
-  `date_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `date_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `driver` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `schedule_list`
 --
 
-INSERT INTO `schedule_list` (`id`, `bus_id`, `from_location`, `to_location`, `departure_time`, `eta`, `status`, `availability`, `price`, `date_updated`) VALUES
-(1, 11, 1, 5, '2022-06-25 15:00:00', '2022-06-25 20:00:00', 0, 25, '50', '2024-01-05 05:43:36'),
-(2, 6, 1, 4, '2022-06-25 20:00:00', '2022-06-25 01:00:00', 0, 30, '26', '2024-01-05 05:43:38'),
-(3, 1, 3, 9, '2022-06-26 10:00:00', '2022-06-26 16:00:00', 0, 32, '33', '2024-01-05 05:43:39'),
-(4, 9, 4, 1, '2022-06-26 08:00:00', '2022-06-26 19:00:00', 0, 30, '65', '2024-01-05 05:43:41'),
-(5, 7, 8, 10, '2022-06-27 10:00:00', '2022-06-27 19:00:00', 0, 33, '80', '2024-01-05 05:43:45'),
-(6, 4, 7, 6, '2022-06-26 11:00:00', '2022-06-25 13:00:00', 0, 35, '43', '2024-01-05 05:43:42'),
-(7, 8, 9, 4, '2022-06-27 15:00:00', '2022-06-27 23:00:00', 0, 34, '75', '2024-01-05 05:43:47'),
-(8, 3, 6, 2, '2022-06-27 12:00:00', '2022-06-25 17:00:00', 0, 31, '68', '2024-01-05 05:43:48'),
-(9, 10, 11, 12, '2022-06-26 10:00:00', '2022-06-26 13:00:00', 0, 38, '65', '2024-01-05 05:43:44'),
-(10, 12, 16, 13, '2024-01-05 16:00:00', '2024-01-06 06:00:00', 1, 30, '760', '2024-01-05 05:56:14'),
-(11, 13, 16, 13, '2024-01-05 16:00:00', '2024-01-06 06:00:00', 1, 30, '960', '2024-01-05 05:57:24'),
-(12, 12, 17, 13, '2024-01-05 17:00:00', '2024-01-06 05:00:00', 1, 30, '760', '2024-01-05 06:04:10'),
-(13, 13, 17, 13, '2024-01-05 17:00:00', '2024-01-06 05:00:00', 1, 30, '960', '2024-01-05 06:05:35'),
-(14, 12, 18, 13, '2024-01-05 15:00:00', '2024-01-06 13:00:00', 1, 30, '760', '2024-01-05 06:02:56'),
-(15, 13, 18, 13, '2024-01-05 15:00:00', '2024-01-06 05:00:00', 1, 30, '960', '2024-01-05 06:06:35'),
-(16, 13, 13, 16, '2024-01-05 18:30:00', '2024-01-06 07:00:00', 0, 30, '960', '2024-01-05 06:21:30'),
-(17, 12, 13, 16, '2024-01-05 09:00:00', '2024-01-05 23:00:00', 1, 30, '760', '2024-01-05 06:21:44'),
-(18, 13, 13, 16, '2024-01-05 18:30:00', '2024-01-06 07:30:00', 1, 30, '960', '2024-01-05 06:23:58'),
-(19, 12, 14, 18, '2024-01-05 07:30:00', '2024-01-05 21:00:00', 1, 30, '760', '2024-01-05 06:29:30'),
-(20, 13, 14, 18, '2024-01-05 17:00:00', '2024-01-06 05:00:00', 1, 30, '960', '2024-01-05 06:32:50'),
-(21, 12, 15, 17, '2024-01-05 16:00:00', '2024-01-06 05:00:00', 1, 30, '760', '2024-01-05 06:36:51'),
-(22, 13, 15, 17, '2024-01-05 19:00:00', '2024-01-06 08:00:00', 1, 30, '960', '2024-01-05 06:38:24');
+INSERT INTO `schedule_list` (`id`, `bus_id`, `from_location`, `to_location`, `departure_time`, `eta`, `status`, `availability`, `price`, `date_updated`, `driver`) VALUES
+(23, 12, 13, 13, '2024-02-15 17:00:00', '2024-02-24 18:00:00', 1, 24, '250', '2024-02-24 06:28:48', 'test'),
+(27, 13, 13, 13, '2024-02-02 14:37:00', '2024-02-23 14:37:00', 0, 123, '123', '2024-02-24 06:40:36', ''),
+(28, 13, 13, 13, '2024-02-14 14:38:00', '2024-03-02 20:00:00', 0, 24, '256', '2024-02-24 06:40:39', 'Erwin Smith'),
+(29, 12, 14, 14, '2024-02-24 19:00:00', '2024-02-24 19:00:00', 1, 2, '4', '2024-02-24 06:40:54', 'Erwin Smith');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_driver`
+--
+
+CREATE TABLE `tbl_driver` (
+  `ID` int(11) NOT NULL,
+  `Name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_feedback`
+--
+
+CREATE TABLE `tbl_feedback` (
+  `ID` int(11) NOT NULL,
+  `Type` varchar(20) DEFAULT NULL,
+  `feedback` varchar(500) NOT NULL,
+  `Fname` varchar(20) NOT NULL,
+  `Lname` varchar(20) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `date_created` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_feedback`
+--
+
+INSERT INTO `tbl_feedback` (`ID`, `Type`, `feedback`, `Fname`, `Lname`, `email`, `date_created`) VALUES
+(3, 'Question', 'test@test1', 'test@test1', 'test@test1', 'test@test1', '2024-02-24 11:24:00'),
+(4, 'Question', 'test2@test', 'test2@test', 'test2@test', 'test2@test', '2024-02-24 11:30:43'),
+(5, 'Comment', 'bal@baltest', 'bal@baltest', 'bal@baltest', 'bal@baltest', '2024-02-24 11:36:57'),
+(6, 'Question', '1231232@123', '1231232@123', '1231232@123', '1231232@123', '2024-02-24 11:46:11'),
+(7, 'Suggestion', 'L RATIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO', 'Erwin', 'Smith', 'erwinlovetitans@gmail.com', '2024-02-24 14:10:02');
 
 -- --------------------------------------------------------
 
@@ -222,6 +248,18 @@ ALTER TABLE `schedule_list`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_driver`
+--
+ALTER TABLE `tbl_driver`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `tbl_feedback`
+--
+ALTER TABLE `tbl_feedback`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -235,7 +273,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `booked`
 --
 ALTER TABLE `booked`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `bus`
@@ -253,7 +291,19 @@ ALTER TABLE `location`
 -- AUTO_INCREMENT for table `schedule_list`
 --
 ALTER TABLE `schedule_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT for table `tbl_driver`
+--
+ALTER TABLE `tbl_driver`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_feedback`
+--
+ALTER TABLE `tbl_feedback`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
