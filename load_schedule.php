@@ -8,6 +8,7 @@ while($row = $qry->fetch_assoc()){
 	$to_location = $conn->query("SELECT id,Concat(terminal_name,', ',city,', ',state) as location FROM location where id = ".$row['to_location'])->fetch_array()['location'];
 	$row['from_location'] = $from_location;
 	$row['to_location'] = $to_location;
+	
 	$row['date'] = date('M d, Y',strtotime($row['departure_time']));
 	$row['time'] = date('h:i A',strtotime($row['departure_time']));
 	if(date('F d, Y',strtotime($row['departure_time'])) == date('F d, Y',strtotime($row['eta']))){

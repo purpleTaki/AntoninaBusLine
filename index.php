@@ -92,7 +92,7 @@
 
 
 <footer>
-    <?php if(isset($_SESSION['login_id'])) ; else include 'feedback.php'; ?>
+    <?php if(isset($_SESSION['login_id'])) include 'footer.php' ; else include 'feedback.php'; ?>
 </footer>
 </body>
 <script>

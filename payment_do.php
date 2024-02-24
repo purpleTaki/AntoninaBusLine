@@ -165,7 +165,9 @@ if ($result->num_rows > 0) {
         </div>
     </div>
 </div>
-
+<footer>
+    <?php include 'feedback.php' ?>
+</footer>
 <script>
     $(document).ready(function() {
         $('#loadingModal').modal('show');

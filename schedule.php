@@ -37,11 +37,13 @@
 									<th class="text-center">#</th>
 									<th class="text-center">Date</th>
 									<th class="text-center">Bus</th>
+									<th class="text-center">Driver</th>
 									<th class="text-center">Location</th>
 									<th class="text-center">Departure</th>
 									<th class="text-center">ETA</th>
 									<th class="text-center">Availability</th>
 									<th class="text-center">Price</th>
+									
 									<th class="text-center">Actions</th>
 								</tr>
 							</thead>
@@ -82,6 +84,7 @@
 									tr.append('<td class="text-center">'+(i++)+'</td>')
 									tr.append('<td class="">'+resp[k].date+'</td>')
 									tr.append('<td class="">'+resp[k].bus+'</td>')
+									tr.append('<td> '+resp[k].driver+'</td>')
 									tr.append('<td class="">'+resp[k].from_location+' - '+resp[k].to_location+'</td>')
 									tr.append('<td>'+resp[k].time+'</td>')
 									tr.append('<td>'+resp[k].eta+'</td>')

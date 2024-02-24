@@ -23,6 +23,10 @@ $location = $conn->query("SELECT id,Concat(terminal_name,', ',city,', ',state) a
 				</select>
 			</div>
 			<div class="form-group mb-2">
+                <label for="driver" class="control-label">Bus Driver</label>
+                <input type="text" class="form-control" id="driver" name="driver" value="<?php echo isset($meta['driver']) ? $meta['driver'] : '' ?>">
+            </div>
+			<div class="form-group mb-2">
 				<label for="from_location" class="control-label">From</label>
 				<select name="from_location" id="from_location" class="form-control" required>
 					<option value="" <?php echo isset($meta['to_location']) && $meta['from_location'] > 0 ? '' : 'selected'  ?> disabled="">Select Here</option>
