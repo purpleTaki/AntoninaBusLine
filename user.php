@@ -62,7 +62,7 @@
 									var tr = $('<tr></tr>');
 									tr.append('<td class="text-center">'+(i++)+'</td>')
 									tr.append('<td class="text-center">'+resp[k].name+'</td>')
-									tr.append('<td>'+resp[k].username+'</td>')
+									tr.append('<td class="text-center">'+resp[k].username+'</td>')
 									tr.append('<td><center><button class="btn btn-sm btn-info edit_bus mr-2" data-id="'+resp[k].id+'">Edit</button><button class="btn btn-sm btn-danger remove_bus" data-id="'+resp[k].id+'">Delete</button></center></td>')
 									$('#user-field tbody').append(tr)
 
@@ -82,7 +82,7 @@
 	}
 	function manage(){
 		$('.edit_bus').click(function(){
-		uni_modal('Edit New User','manage_user.php?id='+$(this).attr('data-id'))
+		uni_modal('Edit User','manage_user.php?id='+$(this).attr('data-id'))
 
 		})
 		$('.remove_bus').click(function(){

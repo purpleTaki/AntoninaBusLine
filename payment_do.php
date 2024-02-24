@@ -6,6 +6,14 @@ $name = $_POST['name'];
 $cnum = $_POST['cNum'];
 $pay_method = $_POST['Pmethod'];
 
+function paidrefnumber() {
+    $timestamp = time();
+    $referenceNumber = date('YmdHis', $timestamp);
+    return $referenceNumber;
+}
+
+$paidref_number = paidrefnumber();
+
 //DATA JOINING from booked tbl with schedule_list tbl
 $sql = "SELECT b.*, s.price
         FROM booked b
@@ -19,19 +27,15 @@ if ($result === false) {
 }
 
 if ($result->num_rows > 0) {
-    // Handle file upload
     $fileName = $_FILES['paymentProof']['name'];
     $fileTmpName = $_FILES['paymentProof']['tmp_name'];
     $uploadFolder = 'upload/';
-    $targetFilePath = $uploadFolder . $refnum . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
+    $targetFilePath = $uploadFolder . $paidref_number . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
 
     if (move_uploaded_file($fileTmpName, $targetFilePath)) {
-        // File uploaded successfully
-        // Update booked status
-        $updateSql = "UPDATE booked SET status = 1 WHERE ref_no = '$refnum' AND name = '$name'";
+        $updateSql = "UPDATE booked SET status = 1, paid_ref = '$paidref_number' WHERE ref_no = '$refnum' AND name = '$name'";
     
         if ($conn->query($updateSql) === true) {
-            // Display success message or redirect as needed...
             include 'header.php';
             include 'db_connect.php';
             if(isset($_SESSION['login_id'])) include 'admin_navbar.php'; 
@@ -41,7 +45,6 @@ if ($result->num_rows > 0) {
         }
     } else {
         echo "Error uploading file.";
-        // Handle the error as needed...
     }
 } else {
     echo '<script>
@@ -52,7 +55,7 @@ if ($result->num_rows > 0) {
 }
 ?>
 
-<input type="text" id="refnumField" value=<?php echo $refnum; ?> hidden/>
+<input type="text" id="refnumField" value=<?php echo $paidref_number; ?> hidden/>
 <!-- Bootstrap Loading Modal -->
 <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -110,7 +113,7 @@ if ($result->num_rows > 0) {
                             //Reference Number
                             echo "<div class='form-group mb-3'>";
                             echo "<label for='refnum'>Receipt Number:</label>";
-                            echo "<span class='ml-2'>$refnum</span>";
+                            echo "<span class='ml-2'>$paidref_number</span>";
                             echo "</div>";
 
                             //Paid via
@@ -143,7 +146,7 @@ if ($result->num_rows > 0) {
                             echo "<p class='text-muted mb-4'>You can now take a screenshot of this or print this as your proof of purchase.</p>";
                             
                             //QR CODE API
-                            $qrData = $refnum . '_' . $name . '_PAID' . '_VERIFIED_' . $cnum;
+                            $qrData = $paidref_number . '_' . $name . '_PAID' . '_VERIFIED_' . $cnum;
                             $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" . urlencode($qrData);
                             ?>
                             <img src="<?php echo $qrCodeUrl; ?>" alt="QR Code_Receipt" class="img-fluid mb-4">
@@ -212,7 +215,7 @@ if ($result->num_rows > 0) {
         // Reference Number
         newWindow.document.write('<div class="form-group mb-3">');
         newWindow.document.write('<label for="refnum">Receipt Number:</label>');
-        newWindow.document.write('<span class="ml-2"><?php echo $refnum; ?></span>');
+        newWindow.document.write('<span class="ml-2"><?php echo $paidref_number; ?></span>');
         newWindow.document.write('</div>');
 
         // Paid via
@@ -243,7 +246,7 @@ if ($result->num_rows > 0) {
         newWindow.document.write('<p class="text-muted mb-4">You can now take a screenshot of this or print this as your proof of purchase.</p>');
 
         // QR CODE API
-        newWindow.document.write('<?php $qrData = $refnum . '_' . $name . '_PAID' . '_VERIFIED_' . $cnum; ?>');
+        newWindow.document.write('<?php $qrData = $paidref_number . '_' . $name . '_PAID' . '_VERIFIED_' . $cnum; ?>');
         newWindow.document.write('<?php $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" . urlencode($qrData); ?>');
         newWindow.document.write('<img src="<?php echo $qrCodeUrl; ?>" alt="QR Code_Receipt" class="img-fluid mb-4">');
         newWindow.document.write('<input type="hidden" name="qrData" value="<?php echo htmlspecialchars($qrData); ?>">');

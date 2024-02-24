@@ -31,11 +31,12 @@
 							<thead class='thead-light'>
 								<tr>
 									<th class="text-center">#</th>
-									<th class="text-center">Ref. No.</th>
+									<th class="text-center">Payment Ref. No.</th>
 									<th class="text-center">Name</th>
 									<th class="text-center">Qty</th>
 									<th class="text-center">Total Amt</th>
 									<th class="text-center">Status</th>
+									<th class="text-center">Paid Ref. No</th>
 									<th class="text-center">Action</th>
 								</tr>
 							</thead>
@@ -112,7 +113,7 @@ function openImageFloatingWindow(imagePath) {
 									tr.append('<td class="text-center">'+resp[k].qty+'</td>')
 									tr.append('<td class="text-center">₱ '+resp[k].amount+'</td>')
 									tr.append('<td class="text-center">'+(resp[k].status == 1 ? 'Paid' :'Unpaid')+'</td>')
-									
+									tr.append('<td class="text-center"> '+resp[k].paid_ref+'</td>')
 									
 									$('#booked-field tbody').append(tr)
 

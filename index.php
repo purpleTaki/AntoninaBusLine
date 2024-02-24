@@ -90,6 +90,10 @@
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
   <script src="assets/js/main.js"></script>
 
+
+<footer>
+    <?php if(isset($_SESSION['login_id'])) ; else include 'feedback.php'; ?>
+</footer>
 </body>
 <script>
   window.uni_modal =  function($title='',$url='',$book = 0){

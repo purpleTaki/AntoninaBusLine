@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +28,7 @@
 <form action="payment_do.php" method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
     <h2 style="color: black;">Pay here.</h2></br>
     <div class="form-group">
-        <label for="refnum">REFERENCE NUMBER</label>
+        <label for="refnum">PAYMENT REFERENCE NUMBER</label>
         <small id="emailHelp" class="form-text text-muted">Printing your ticket requires you to save the reference number.</small>
         <input type="text" class="form-control" id="refnum" name="refnum" placeholder="12 digit reference #" maxlength="12" autocomplete="off" autofocus required>
     </div>
@@ -54,11 +56,16 @@
     </div>
 
     <button type="submit" class="btn btn-success" id="btn_pay" style="width: 100%;">Proceed</button>
-</form>
+    
 
+</form>
 </div>
 
 
+
+<footer>
+    <?php include 'feedback.php' ?>
+</footer>
 </body>
 
 <script>
@@ -74,7 +81,8 @@
         return true; 
     }
 
-
-  
+    
 </script>
+
+
 </html>
