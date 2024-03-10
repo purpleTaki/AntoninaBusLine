@@ -58,7 +58,7 @@
         <input class="form-check-input" type="checkbox" id="termsCheckbox">
         I have read the <strong><a href="#" id="termsLink"> terms and conditions</a></strong>.
     </div>
-    <button type="submit" class="btn btn-success" id="btn_pay" style="width: 100%;" disabled>Proceed</button>
+    <button type="submit" class="btn btn-success" id="btn_pay" style="width: 100%;" disabled>Pay</button>
     
     <!-- Modal -->
     <div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
@@ -108,7 +108,7 @@
 </body>
 
 <script>
-    
+
     const termsLink = document.getElementById('termsLink');
     const termsModal = document.getElementById('termsModal');
     const acceptBtn = document.getElementById('acceptBtn');
