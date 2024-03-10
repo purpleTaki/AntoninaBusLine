@@ -50,7 +50,7 @@
             </form>
             </div>
             <div class="modal-footer ">
-                For more info! Visit our <a href="https://www.facebook.com/antoninalineofficial"> Facebook </a>
+                For more info! Visit our <a href="https://www.facebook.com/antoninalineofficial" target="_blank"> Facebook </a>
             </div>
         </div>
         <!-- /.modal-content -->

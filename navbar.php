@@ -9,8 +9,13 @@
           <li class="nav-home"><a href="./index.php?page=home">Home</a></li>
            <li class="nav-schedule"><a href="./index.php?page=schedule">View Bus Schedule</a></li>
            <li class="nav-admin"><a href="./payment.php">Payment Hub </a></li>
-			<li class="nav-admin"><a href="./index.php?page=admin">Admin (Login)</a></li>
-             
+			
+           <li class="drop-down nav-user"><a href="#"> </a>
+             <ul>
+              <li class="nav-admin"><a href="./index.php?page=admin">Admin (Login)</a></li>
+				
+            </ul>
+          </li>
               
         </ul>
       </nav><!-- .nav-menu -->
