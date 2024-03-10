@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +22,7 @@
   </div>
 </div>
 </br>
-<div class="container" style="width:30%; padding:80px; background-color: rgba(255,255,255,0.8); border-radius: 35px;">
+<div class="container" style="width:50%; padding:80px; background-color: rgba(255,255,255,0.8); border-radius: 35px;">
 <form action="payment_do.php" method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
     <h2 style="color: black;">Pay here.</h2></br>
     <div class="form-group">
@@ -32,17 +30,25 @@
         <small id="emailHelp" class="form-text text-muted">Printing your ticket requires you to save the reference number.</small>
         <input type="text" class="form-control" id="refnum" name="refnum" placeholder="12 digit reference #" maxlength="12" autocomplete="off" autofocus required>
     </div>
-    <div class="form-group">
-        <label for="Lname">Full Name</label>
-        <small id="emailHelp" class="form-text text-muted">Must be the same name you registered with.</small>
-        <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" autocomplete="off" required>
+    
+    <hr/>
+    <div class="row">
+        <small id="emailHelp" class="form-text text-muted col-sm-12">Must be the same name you registered with.</small>
     </div>
-    <div class="form-group">
-        <label for="cNum">Contact #</label>
-        <input type="tel" class="form-control" id="cNum" name="cNum" placeholder="Contact Number" autocomplete="off" required >
+    <div class="row">
+        <div class="col-sm-6">
+            <label for="Lname">Full Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" autocomplete="off" required>
+        </div>
+        <div class="col-sm-6">
+            <label for="cNum">Contact #</label>
+            <input type="tel" class="form-control" id="cNum" name="cNum" placeholder="Contact Number" autocomplete="off" required >
+        </div>
+        
     </div>
     <div class="form-group">
         <label for="Pmethod">Payment Method</label>
+        
         <select class="form-control" id="Pmethod" name="Pmethod">
             <option select hidden> -- PAYMENT METHOD --</option>
             <option >GCASH - 09066544054</option>
@@ -54,9 +60,27 @@
         <label for="paymentReceipt">Proof of Payment</label>
         <input type="file" class="form-control" id="paymentProof" name="paymentProof" accept="image/*" required>
     </div>
+    <div class="row">
+        <div class="form-group">
+        &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="discountCheckbox"> Are you a student/senior/pregnant/PWD?
+        </div>
+        <div class="form-group" id="discountOptions" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out;">
+        &nbsp;&nbsp;&nbsp;&nbsp;<label>Select Discount Type:</label><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary">
+                    <input type="radio" name="options" value="Student" id="option_a1" autocomplete="off"> Student
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="options" value="Senior" id="option_a2" autocomplete="off"> Senior
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="options" value="Pregnant/PWD" id="option_a3" autocomplete="off"> Pregnant/PWD
+                </label>
+            </div>
+        </div>
+    </div> 
     <div class="form-group">
-        <input class="form-check-input" type="checkbox" id="termsCheckbox">
-        I have read the <strong><a href="#" id="termsLink"> terms and conditions</a></strong>.
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-check-input" type="checkbox" id="termsCheckbox">I have read the <strong><a href="#" id="termsLink"> terms and conditions</a></strong>.
     </div>
     <button type="submit" class="btn btn-success" id="btn_pay" style="width: 100%;" disabled>Pay</button>
     
@@ -114,7 +138,24 @@
     const acceptBtn = document.getElementById('acceptBtn');
     const submitBtn = document.getElementById('btn_pay');
 
+    var discountCheckbox = document.getElementById('discountCheckbox');
+    var discountOptions = document.getElementById('discountOptions');
+
+    // Add event listener to the checkbox
+    discountCheckbox.addEventListener('change', function() {
+        // Show/hide discount options based on checkbox state
+        if (this.checked) {
+            discountOptions.style.maxHeight = discountOptions.scrollHeight + 'px';
+        } else {
+            discountOptions.style.maxHeight = '0';
+        }
+    });
     
+
+    function test() {
+        alert
+    }
+
     termsLink.addEventListener('click', function(e) {
         e.preventDefault();
         $('#termsModal').modal('show');

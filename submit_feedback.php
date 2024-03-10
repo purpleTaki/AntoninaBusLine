@@ -14,9 +14,36 @@ $sql = "INSERT INTO tbl_feedback (Type, feedback, Fname, Lname, email, date_crea
         VALUES ('$type', '$feedback', '$firstName', '$lastName', '$email', NOW())";
 
 if ($conn->query($sql) === TRUE) {
-    echo 'Feedback saved successfully!';
+    echo 'Feedback sent successfully! Redirecting you to homepage in <span id="countdown"></span> seconds.';
+
+
 } else {
     echo 'Error: ' . $sql . '<br>' . $conn->error;
 }
 
 ?>
+
+<script>
+    
+    function redirectToIndex() {
+        window.location.href = 'index.php';
+    }
+
+    function countdownRedirect() {
+        let countdown = 3;
+
+        function updateCountdown() {
+            countdown--;
+
+            // Display countdown value
+            document.getElementById('countdown').innerText = countdown;
+            if (countdown <= 0) {
+                redirectToIndex();
+            } else {
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        updateCountdown();
+    }
+    countdownRedirect();
+</script>
