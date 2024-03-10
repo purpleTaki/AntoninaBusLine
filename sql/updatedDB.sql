@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2024 at 11:02 AM
+-- Generation Time: Mar 10, 2024 at 11:31 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -36,20 +36,25 @@ CREATE TABLE `booked` (
   `status` tinyint(1) DEFAULT 0 COMMENT '1=Paid, 0- Unpaid',
   `date_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `cnum` varchar(50) NOT NULL,
-  `paid_ref` varchar(50) NOT NULL DEFAULT 'AWAITING PAYMENT'
+  `paid_ref` varchar(50) NOT NULL DEFAULT 'AWAITING PAYMENT',
+  `discount` int(1) DEFAULT 0 COMMENT '1- discounted / 0 - Not discounted'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `booked`
 --
 
-INSERT INTO `booked` (`id`, `schedule_id`, `ref_no`, `name`, `qty`, `status`, `date_updated`, `cnum`, `paid_ref`) VALUES
-(12, 10, '202401316263', 'test', 1, 1, '2024-02-24 13:44:26', '09504059787', '20240224064426'),
-(15, 17, '202401314052', 'Joseph Garcia', 3, 1, '2024-01-31 21:41:59', '09397126139', 'AWAITING PAYMENT'),
-(16, 10, '202402101275', 'test', 1, 1, '2024-02-10 17:50:26', '123123123123', '20240210105026'),
-(17, 10, '202402106867', 'terry', 2, 1, '2024-02-10 18:04:51', '123123123', '20240210110451'),
-(18, 11, '202402107582', 'balbal', 2, 1, '2024-02-10 18:17:03', '123123', '20240210111703'),
-(19, 17, '202402105212', 'kenny', 2, 1, '2024-02-10 18:19:29', '123123', '20240210111929');
+INSERT INTO `booked` (`id`, `schedule_id`, `ref_no`, `name`, `qty`, `status`, `date_updated`, `cnum`, `paid_ref`, `discount`) VALUES
+(12, 10, '202401316263', 'test', 1, 1, '2024-02-24 13:44:26', '09504059787', '20240224064426', 0),
+(15, 17, '202401314052', 'Joseph Garcia', 3, 1, '2024-01-31 21:41:59', '09397126139', 'AWAITING PAYMENT', 0),
+(16, 10, '202402101275', 'test', 1, 1, '2024-02-10 17:50:26', '123123123123', '20240210105026', 0),
+(17, 10, '202402106867', 'terry', 2, 1, '2024-02-10 18:04:51', '123123123', '20240210110451', 0),
+(18, 11, '202402107582', 'balbal', 2, 1, '2024-02-10 18:17:03', '123123', '20240210111703', 0),
+(19, 17, '202402105212', 'kenny', 2, 1, '2024-02-10 18:19:29', '123123', '20240210111929', 0),
+(20, 23, '202403068085', 'test', 1, 1, '2024-03-10 12:38:49', '123123', '20240310053849', 0),
+(21, 29, '202403103386', 'terry', 1, 1, '2024-03-10 11:00:04', '123123', '20240310040004', 0),
+(22, 23, '20240310576', 'claire', 2, 1, '2024-03-10 12:19:55', '12312312312', '20240310051955', 0),
+(23, 29, '202403104400', 'bal', 12, 1, '2024-03-10 12:47:00', '123123', '20240310054700', 0);
 
 -- --------------------------------------------------------
 
@@ -190,7 +195,10 @@ INSERT INTO `tbl_feedback` (`ID`, `Type`, `feedback`, `Fname`, `Lname`, `email`,
 (4, 'Question', 'test2@test', 'test2@test', 'test2@test', 'test2@test', '2024-02-24 11:30:43'),
 (5, 'Comment', 'bal@baltest', 'bal@baltest', 'bal@baltest', 'bal@baltest', '2024-02-24 11:36:57'),
 (6, 'Question', '1231232@123', '1231232@123', '1231232@123', '1231232@123', '2024-02-24 11:46:11'),
-(7, 'Suggestion', 'L RATIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO', 'Erwin', 'Smith', 'erwinlovetitans@gmail.com', '2024-02-24 14:10:02');
+(7, 'Suggestion', 'L RATIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO', 'Erwin', 'Smith', 'erwinlovetitans@gmail.com', '2024-02-24 14:10:02'),
+(8, 'Comment', '121212', '121', '21212', '1212@12312', '2024-03-10 16:39:38'),
+(9, 'Comment', '121212', '121', '21212', '1212@12312', '2024-03-10 16:42:26'),
+(10, 'Suggestion', 'asd', 'asd', 'asd', 'asd@asd', '2024-03-10 16:42:40');
 
 -- --------------------------------------------------------
 
@@ -273,7 +281,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `booked`
 --
 ALTER TABLE `booked`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `bus`
@@ -303,7 +311,7 @@ ALTER TABLE `tbl_driver`
 -- AUTO_INCREMENT for table `tbl_feedback`
 --
 ALTER TABLE `tbl_feedback`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
